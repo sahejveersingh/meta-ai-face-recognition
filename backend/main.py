@@ -29,6 +29,7 @@ import re
 import json
 from urllib.parse import quote_plus
 import random
+from fastapi.staticfiles import StaticFiles
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -130,15 +131,19 @@ def detect_and_crop_faces(image_bytes):
             )
             logger.info(f"🔍 Sensitive detection found {len(faces)} potential faces")
         
-        cropped_faces = []
+        cropped_face_paths = []
         for i, (x, y, w, h) in enumerate(faces):
             face_img = img[y:y+h, x:x+w]
-            face_filename = f"faces/{uuid.uuid4()}.jpg"
-            cv2.imwrite(face_filename, face_img)
-            cropped_faces.append(face_filename)
-            logger.info(f"👤 Detected face {i+1}: {face_filename} (size: {w}x{h})")
+            face_filename = f"face_{uuid.uuid4().hex}.jpg"
+            face_path = os.path.join('faces', face_filename)
+            cv2.imwrite(face_path, face_img)
+            # Add the public URL for the face image
+            base_url = os.getenv("BASE_URL", "http://localhost:8000")
+            face_url = f"{base_url}/faces/{face_filename}"
+            cropped_face_paths.append(face_url)
+            logger.info(f"👤 Detected face {i+1}: {face_url} (size: {w}x{h})")
         
-        return cropped_faces
+        return cropped_face_paths
     except Exception as e:
         logger.error(f"Error in face detection: {e}")
         import traceback
@@ -1777,6 +1782,7 @@ def create_comprehensive_profile_sync(face_path):
             "reverse_search_results": reverse_search_results,
             "people_search_results": people_search_results,
             "summary": summary,
+            "image": face_path,  # Add the image URL to the profile
             "manual_search_links": {
                 "pimeyes": "https://pimeyes.com/en",
                 "tineye": "https://tineye.com/",
@@ -2004,3 +2010,6 @@ def generate_free_summary(search_summary):
     except Exception as e:
         logger.error(f"Free summary generation failed: {e}")
         return f"Summary generation failed: {str(e)}. Please use the manual search links for verification."
+
+# Serve the faces directory as static files
+app.mount("/faces", StaticFiles(directory="faces"), name="faces")
