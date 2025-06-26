@@ -171,6 +171,7 @@ function App() {
 
   const isProcessingActive = status.processing_active === 'true';
 
+  console.log("Profiles data:", profiles);
   return (
     <div className="app">
       <header className="header">
