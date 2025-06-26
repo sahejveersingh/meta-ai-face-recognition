@@ -1,5 +1,62 @@
 # Meta AI - Real-Time Face Recognition & People Search
 
+## Architecture
+
+This project uses a modern, cloud-friendly architecture for real-time face recognition from live video streams. Below is a detailed architecture diagram and explanation:
+
+```mermaid
+flowchart TD
+    subgraph User_Device["User Device"]
+        OBS["🎥 OBS Studio<br/>(Streams Video)"]
+        BROWSER["🖥️ Web Browser<br/>(Dashboard UI)"]
+    end
+    subgraph Local_Infra["Local Streaming Infra"]
+        NGINX["🟦 nginx-rtmp<br/>(Docker/Local)"]
+        NGROK["🌐 ngrok Tunnel<br/>tcp://2.tcp.ngrok.io:14654"]
+    end
+    subgraph Cloud["Cloud Services"]
+        RAILWAY["☁️ FastAPI Backend<br/>Railway"]
+        VERCEL["☁️ React Frontend<br/>Vercel"]
+    end
+    OBS -- "RTMP Stream (rtmp://localhost:1935/live/test)" --> NGINX
+    NGINX -- "RTMP (1935)" --> NGROK
+    NGROK -- "Public RTMP URL (rtmp://2.tcp.ngrok.io:14654/live/test)" --> RAILWAY
+    RAILWAY -- "REST API (status, profiles, upload)" --> VERCEL
+    VERCEL -- "Web UI/API Calls" --> BROWSER
+    BROWSER -- "User Interacts" --> VERCEL
+    RAILWAY -- "Serves face images (https://.../faces/face_xxx.jpg)" --> VERCEL
+    VERCEL -- "Loads face images" --> BROWSER
+    OBS -. "(Optional HLS)" .-> NGINX
+    NGINX -. "HLS (8080)" .-> NGROK
+    NGROK -. "Public HLS URL (http)" .-> BROWSER
+    NGINX -- "/stat, /hls endpoints" --> BROWSER
+    RAILWAY -- "Env: RTMP_URL, API Keys" --- RAILWAY
+    VERCEL -- "Env: REACT_APP_BACKEND_URL" --- VERCEL
+    classDef cloud fill:#e0f7fa,stroke:#0288d1,stroke-width:2px;
+    classDef local fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef user fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+    class Cloud cloud;
+    class Local_Infra local;
+    class User_Device user;
+```
+
+**Component Overview:**
+- **OBS Studio:** Streams live video to the local RTMP server.
+- **nginx-rtmp:** Receives RTMP streams locally (via Docker or native install).
+- **ngrok:** Exposes the local RTMP server to the internet with a public TCP address.
+- **Railway (Backend):** FastAPI backend processes the RTMP stream, detects faces, and serves face images and API endpoints.
+- **Vercel (Frontend):** React dashboard for real-time status, uploads, and results display.
+- **User Browser:** Interacts with the dashboard, uploads images, and views detected profiles (with face images).
+
+**Cloud Streaming Flow:**
+1. OBS streams to `rtmp://localhost:1935/live/test` (nginx-rtmp).
+2. ngrok exposes the RTMP server at a public address (e.g., `rtmp://2.tcp.ngrok.io:14654/live/test`).
+3. The backend (on Railway) connects to the public RTMP URL for processing.
+4. Detected faces are saved and served as public URLs.
+5. The frontend (on Vercel) displays real-time results and face images to the user.
+
+---
+
 A comprehensive real-time face recognition application with RTMP stream processing, reverse image search, people database searches, and GPT-powered profile summarization.
 
 ## 🚀 Features
