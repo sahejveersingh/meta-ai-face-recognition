@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp
+    container_name: nginx-rtmp
+    ports:
+      - "1935:1935"  # RTMP
+      - "8080:80"    # HTTP
+    volumes:
+      - ./nginx-rtmp.conf:/etc/nginx/nginx.conf:ro
+      - ./streams:/tmp/streams
+    restart: unless-stopped
+    networks:
+      - meta-ai-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meta-ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_api_key_here}
+      - TINEYE_API_KEY=${TINEYE_API_KEY:-your_tineye_api_key_here}
+      - BING_VISUAL_API_KEY=${BING_VISUAL_API_KEY:-your_bing_visual_api_key_here}
+      - PIMEYES_USERNAME=${PIMEYES_USERNAME:-your_pimeyes_username}
+      - PIMEYES_PASSWORD=${PIMEYES_PASSWORD:-your_pimeyes_password}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=True
+      - CHROME_BIN=/usr/bin/chromium
+    volumes:
+      - ./faces:/app/faces
+      - ./streams:/app/streams
+      - ./backend/main.py:/app/main.py
+    depends_on:
+      - nginx-rtmp
+    restart: unless-stopped
+    networks:
+      - meta-ai-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: meta-ai-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - meta-ai-network
+
+networks:
+  meta-ai-network:
+    driver: bridge
+
+volumes:
+  faces:
+  streams: 
