@@ -533,41 +533,76 @@ body {
   gap: 1.5rem;
 }
 
+/* Profile Card Modernization */
 .profile-card {
-  background: rgba(31, 41, 55, 0.8);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(75, 85, 99, 0.3);
-  backdrop-filter: blur(10px);
+  background: rgba(31, 41, 55, 0.95);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  border: 1px solid rgba(75, 85, 99, 0.25);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.profile-card:hover {
+  transform: translateY(-4px) scale(1.025);
+  box-shadow: 0 12px 32px rgba(59,130,246,0.18);
+  border-color: #60a5fa;
+}
+
+.profile-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  width: 110px;
+  height: 110px;
+}
+
+.profile-image {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #3b82f6;
+  box-shadow: 0 2px 12px rgba(59,130,246,0.12);
+  background: #222b3a;
 }
 
 .profile-header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.15);
 }
 
 .profile-header h3 {
   color: #f9fafb;
-  font-size: 1.125rem;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .profile-timestamp {
   color: #9ca3af;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
 .profile-summary {
-  background: rgba(55, 65, 81, 0.5);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid rgba(75, 85, 99, 0.3);
-  color: #d1d5db;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  color: #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.1rem 1rem 1rem 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
   line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  text-align: left;
 }
 
 .pimeyes-results h4 {
@@ -685,5 +720,19 @@ body {
   .search-results,
   .setup-instructions {
     padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .profile-image-wrapper, .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+  .profile-summary {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.5rem 0.7rem 0.5rem;
   }
 } 
