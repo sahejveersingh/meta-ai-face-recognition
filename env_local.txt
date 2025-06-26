@@ -1,0 +1,8 @@
+# Backend
+RTMP_URL=rtmp://localhost:1935/live/test
+BASE_URL=http://localhost:8000
+PIMEYES_EMAIL=your@email.com
+PIMEYES_PASSWORD=yourpassword
+
+# Frontend
+REACT_APP_BACKEND_URL=http://localhost:8000 

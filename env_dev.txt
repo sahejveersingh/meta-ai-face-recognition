@@ -1,0 +1,8 @@
+# Backend
+RTMP_URL=rtmp://<ngrok-tcp-host>:<ngrok-tcp-port>/live/test
+BASE_URL=https://meta-ai-face-recognition-production.up.railway.app
+PIMEYES_EMAIL=your@email.com
+PIMEYES_PASSWORD=yourpassword
+
+# Frontend
+REACT_APP_BACKEND_URL=https://meta-ai-face-recognition-production.up.railway.app 
