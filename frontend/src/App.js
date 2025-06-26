@@ -17,7 +17,6 @@ function App() {
     error: '', 
     processing_active: 'false' 
   });
-  const [pimeyesTest, setPimeyesTest] = useState(null);
   const [pimeyesTesting, setPimeyesTesting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState('');
@@ -95,21 +94,6 @@ function App() {
     setProcessing(false);
   };
 
-  const testPimeyes = async () => {
-    setPimeyesTesting(true);
-    setPimeyesTest(null);
-    try {
-      const res = await axios.get(`${BACKEND_URL}/test-pimeyes/`);
-      setPimeyesTest(res.data);
-    } catch (err) {
-      setPimeyesTest({ 
-        status: 'error', 
-        message: err.response?.data?.detail || 'Unknown error' 
-      });
-    }
-    setPimeyesTesting(false);
-  };
-
   const handleImageUpload = async (e) => {
     e.preventDefault();
     const file = e.target.image.files[0];
@@ -171,7 +155,7 @@ function App() {
 
   const isProcessingActive = status.processing_active === 'true';
 
-  console.log("Profiles data:", profiles);
+  // console.log("Profiles data:", profiles);
   return (
     <div className="app">
       <header className="header">
@@ -188,13 +172,6 @@ function App() {
               disabled={processing}
             >
               {processing ? 'Processing...' : isProcessingActive ? 'Stop Detection' : 'Start Detection'}
-            </button>
-            <button 
-              className={`btn btn-secondary ${pimeyesTesting ? 'loading' : ''}`}
-              onClick={testPimeyes}
-              disabled={pimeyesTesting}
-            >
-              {pimeyesTesting ? 'Testing...' : 'Test PimEyes'}
             </button>
           </div>
         </div>
@@ -272,15 +249,6 @@ function App() {
               <div className="message-banner success">
                 <span className="message-icon">ℹ️</span>
                 {startMsg}
-              </div>
-            )}
-
-            {pimeyesTest && (
-              <div className={`message-banner ${pimeyesTest.status === 'ok' ? 'success' : pimeyesTest.status === 'warning' ? 'warning' : 'error'}`}>
-                <span className="message-icon">
-                  {pimeyesTest.status === 'ok' ? '✅' : pimeyesTest.status === 'warning' ? '⚠️' : '❌'}
-                </span>
-                {pimeyesTest.message}
               </div>
             )}
 
