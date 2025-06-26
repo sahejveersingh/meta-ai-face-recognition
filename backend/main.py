@@ -495,7 +495,8 @@ def process_rtmp_stream():
         print(f"🎥 Starting real-time face detection from RTMP stream")
         
         # Try to connect directly to the RTMP stream
-        rtmp_url = 'rtmp://nginx-rtmp:1935/live/test'
+        import os
+        rtmp_url = os.getenv("RTMP_URL", "rtmp://nginx-rtmp:1935/live/test")
         cap = cv2.VideoCapture(rtmp_url)
         
         if not cap.isOpened():
