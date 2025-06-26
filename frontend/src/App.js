@@ -157,17 +157,17 @@ function App() {
 
   // console.log("Profiles data:", profiles);
   return (
-    <div className="app">
-      <header className="header">
-        <div className="header-content">
-          <h1 className="title">
-            <span className="title-icon">🤖</span>
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      <header className="sticky top-0 z-30 w-full bg-black border-b border-neutral-800">
+        <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3 sm:py-4">
+          <h1 className="flex items-center gap-3 text-2xl font-bold tracking-tight">
+            <span className="text-3xl">🤖</span>
             Meta AI Glasses
-            <span className="title-subtitle">Real-Time Face Recognition</span>
+            <span className="hidden sm:inline text-base font-normal text-neutral-400 ml-2">Real-Time Face Recognition</span>
           </h1>
-          <div className="header-actions">
+          <div>
             <button 
-              className={`btn btn-primary ${processing ? 'loading' : ''}`}
+              className={`px-5 py-2 rounded-md font-semibold bg-white text-black hover:bg-neutral-100 transition disabled:opacity-60 ${processing ? 'opacity-60' : ''}`}
               onClick={isProcessingActive ? stopRTMPProcessing : startRTMPProcessing}
               disabled={processing}
             >
@@ -177,28 +177,30 @@ function App() {
         </div>
       </header>
 
-      <nav className="nav">
-        <button 
-          className={`nav-tab ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          📊 Dashboard
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'upload' ? 'active' : ''}`}
-          onClick={() => setActiveTab('upload')}
-        >
-          📤 Upload Image
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'profiles' ? 'active' : ''}`}
-          onClick={() => setActiveTab('profiles')}
-        >
-          👥 Detected Profiles
-        </button>
+      <nav className="sticky top-[56px] z-20 w-full bg-black border-b border-neutral-800 overflow-x-auto">
+        <div className="max-w-5xl mx-auto flex items-center px-2 sm:px-4 gap-1">
+          <button 
+            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'dashboard' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button 
+            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'upload' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
+            onClick={() => setActiveTab('upload')}
+          >
+            📤 Upload Image
+          </button>
+          <button 
+            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'profiles' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
+            onClick={() => setActiveTab('profiles')}
+          >
+            👥 Detected Profiles
+          </button>
+        </div>
       </nav>
 
-      <main className="main">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-6">
         {activeTab === 'dashboard' && (
           <div className="dashboard">
             <div className="status-grid">
