@@ -202,8 +202,8 @@ function App() {
 
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-6">
         {activeTab === 'dashboard' && (
-          <div className="dashboard">
-            <div className="status-grid">
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               <StatusIndicator status={status.rtmp} label="RTMP Stream" />
               <StatusIndicator status={status.backend} label="Backend" />
               <StatusIndicator status={status.selenium} label="Selenium/PimEyes" />
@@ -214,68 +214,66 @@ function App() {
             </div>
 
             {status.error && (
-              <div className="error-banner">
-                <span className="error-icon">⚠️</span>
-                {status.error === 'Failed to connect to RTMP stream' ? (
-                  <div>
-                    <strong>No RTMP Stream Detected</strong><br/>
-                    Please start streaming from OBS to <code>rtmp://localhost:1935/live/test</code> and then click "Start Detection"
-                  </div>
-                ) : (
-                  `Error: ${status.error}`
-                )}
+              <div className="rounded-lg bg-red-900/80 border border-red-700 text-red-200 px-4 py-3 flex items-center gap-3 shadow">
+                <span className="text-2xl">⚠️</span>
+                <div className="flex-1 min-w-0">
+                  {status.error === 'Failed to connect to RTMP stream' ? (
+                    <div>
+                      <strong>No RTMP Stream Detected</strong><br/>
+                      <span className="break-all">Please start streaming from OBS to <code className="bg-black/40 px-1 rounded">rtmp://localhost:1935/live/test</code> and then click "Start Detection"</span>
+                    </div>
+                  ) : (
+                    `Error: ${status.error}`
+                  )}
+                </div>
               </div>
             )}
 
             {status.rtmp === 'error' && !status.error && (
-              <div className="message-banner warning">
-                <span className="message-icon">📡</span>
-                <div>
+              <div className="rounded-lg bg-yellow-900/80 border border-yellow-700 text-yellow-200 px-4 py-3 flex items-center gap-3 shadow">
+                <span className="text-2xl">📡</span>
+                <div className="flex-1 min-w-0">
                   <strong>RTMP Stream Not Available</strong><br/>
-                  No active stream detected. Please configure OBS to stream to <code>rtmp://localhost:1935/live/test</code>
+                  <span className="break-all">No active stream detected. Please configure OBS to stream to <code className="bg-black/40 px-1 rounded">rtmp://localhost:1935/live/test</code></span>
                 </div>
               </div>
             )}
 
             {status.rtmp === 'unknown' && (
-              <div className="message-banner info">
-                <span className="message-icon">ℹ️</span>
-                <div>
+              <div className="rounded-lg bg-blue-900/80 border border-blue-700 text-blue-200 px-4 py-3 flex items-center gap-3 shadow">
+                <span className="text-2xl">ℹ️</span>
+                <div className="flex-1 min-w-0">
                   <strong>Ready to Start</strong><br/>
-                  Configure OBS to stream to <code>rtmp://localhost:1935/live/test</code> and click "Start Detection" to begin face recognition
+                  <span className="break-all">Configure OBS to stream to <code className="bg-black/40 px-1 rounded">rtmp://localhost:1935/live/test</code> and click "Start Detection" to begin face recognition</span>
                 </div>
               </div>
             )}
 
             {startMsg && (
-              <div className="message-banner success">
-                <span className="message-icon">ℹ️</span>
-                {startMsg}
+              <div className="rounded-lg bg-green-900/80 border border-green-700 text-green-200 px-4 py-3 flex items-center gap-3 shadow">
+                <span className="text-2xl">ℹ️</span>
+                <span className="flex-1 min-w-0">{startMsg}</span>
               </div>
             )}
 
-            <div className="setup-instructions">
-              <h2>🚀 Quick Setup</h2>
-              <div className="instructions-grid">
-                <div className="instruction-card">
-                  <div className="instruction-number">1</div>
-                  <h3>Start Stream</h3>
-                  <p>Configure OBS to stream to <code>rtmp://localhost:1935/live/test</code></p>
+            <div className="rounded-2xl bg-neutral-900/90 border border-neutral-800 shadow-lg px-4 py-6">
+              <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2"><span>🚀</span> Quick Setup</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="rounded-xl bg-neutral-800/80 border border-neutral-700 p-5 flex flex-col gap-2 shadow">
+                  <div className="flex items-center gap-2 mb-2"><span className="bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold">1</span><span className="font-semibold">Start Stream</span></div>
+                  <div className="text-sm text-neutral-200">Configure OBS to stream to <span className="block break-all font-mono bg-black/40 px-1 rounded mt-1">rtmp://localhost:1935/live/test</span></div>
                 </div>
-                <div className="instruction-card">
-                  <div className="instruction-number">2</div>
-                  <h3>Start Detection</h3>
-                  <p>Click "Start Detection" to begin real-time face recognition</p>
+                <div className="rounded-xl bg-neutral-800/80 border border-neutral-700 p-5 flex flex-col gap-2 shadow">
+                  <div className="flex items-center gap-2 mb-2"><span className="bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold">2</span><span className="font-semibold">Start Detection</span></div>
+                  <div className="text-sm text-neutral-200">Click "Start Detection" to begin real-time face recognition</div>
                 </div>
-                <div className="instruction-card">
-                  <div className="instruction-number">3</div>
-                  <h3>Test PimEyes</h3>
-                  <p>Click "Test PimEyes" to verify Selenium automation</p>
+                <div className="rounded-xl bg-neutral-800/80 border border-neutral-700 p-5 flex flex-col gap-2 shadow">
+                  <div className="flex items-center gap-2 mb-2"><span className="bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold">3</span><span className="font-semibold">Test PimEyes</span></div>
+                  <div className="text-sm text-neutral-200">Click "Test PimEyes" to verify Selenium automation</div>
                 </div>
-                <div className="instruction-card">
-                  <div className="instruction-number">4</div>
-                  <h3>View Results</h3>
-                  <p>Detected profiles will appear in the "Detected Profiles" tab</p>
+                <div className="rounded-xl bg-neutral-800/80 border border-neutral-700 p-5 flex flex-col gap-2 shadow">
+                  <div className="flex items-center gap-2 mb-2"><span className="bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold">4</span><span className="font-semibold">View Results</span></div>
+                  <div className="text-sm text-neutral-200">Detected profiles will appear in the "Detected Profiles" tab</div>
                 </div>
               </div>
             </div>
