@@ -418,7 +418,11 @@ function App() {
                           {new Date().toLocaleTimeString()}
                         </span>
                       </div>
-                      
+                      {profile.image && (
+                        <div className="profile-image-wrapper">
+                          <img src={profile.image} alt={`Face ${idx + 1}`} className="profile-image" />
+                        </div>
+                      )}
                       {profile.summary && (
                         <div className="profile-summary">
                           <strong>Summary:</strong> {profile.summary}
