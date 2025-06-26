@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+// Set backend URL from env, fallback to localhost
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+
 function App() {
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +35,7 @@ function App() {
 
   const fetchProfiles = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/rtmp-profiles/');
+      const res = await axios.get(`${BACKEND_URL}/rtmp-profiles/`);
       setProfiles(res.data.profiles);
       setLoading(false);
     } catch (err) {
@@ -42,7 +45,7 @@ function App() {
 
   const fetchStatus = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/status/');
+      const res = await axios.get(`${BACKEND_URL}/status/`);
       const newStatus = res.data;
       
       // Check if RTMP stream status changed from 'ok' to 'error'
@@ -68,7 +71,7 @@ function App() {
     setProcessing(true);
     setStartMsg('Starting real-time face detection...');
     try {
-      await axios.post('http://localhost:8000/start-rtmp-processing/');
+      await axios.post(`${BACKEND_URL}/start-rtmp-processing/`);
       setStartMsg('Real-time face detection started!');
       setTimeout(() => setStartMsg(''), 3000);
     } catch (err) {
@@ -82,7 +85,7 @@ function App() {
     setProcessing(true);
     setStartMsg('Stopping real-time face detection...');
     try {
-      await axios.post('http://localhost:8000/stop-rtmp-processing/');
+      await axios.post(`${BACKEND_URL}/stop-rtmp-processing/`);
       setStartMsg('Real-time face detection stopped!');
       setTimeout(() => setStartMsg(''), 3000);
     } catch (err) {
@@ -96,7 +99,7 @@ function App() {
     setPimeyesTesting(true);
     setPimeyesTest(null);
     try {
-      const res = await axios.get('http://localhost:8000/test-pimeyes/');
+      const res = await axios.get(`${BACKEND_URL}/test-pimeyes/`);
       setPimeyesTest(res.data);
     } catch (err) {
       setPimeyesTest({ 
@@ -118,7 +121,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await axios.post('http://localhost:8000/upload-image/', formData, {
+      const res = await axios.post(`${BACKEND_URL}/upload-image/`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setImageResults(res.data.results);
