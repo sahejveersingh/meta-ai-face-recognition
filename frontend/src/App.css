@@ -7,9 +7,9 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #0a0a0f 0%, #181824 60%, #232336 100%);
+  background: #0a0a0a;
   min-height: 100vh;
-  color: #e5e7eb;
+  color: #f5f5f7;
 }
 
 .app {
@@ -21,9 +21,8 @@ body {
 
 /* Header */
 .header {
-  background: rgba(17, 24, 39, 0.98);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(75, 85, 99, 0.25);
+  background: #000;
+  border-bottom: 1px solid #222;
   padding: 1.2rem 0 0.8rem 0;
   position: sticky;
   top: 0;
@@ -45,19 +44,20 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #f9fafb;
+  color: #fff;
+  letter-spacing: -0.01em;
 }
 
 .title-icon {
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 
 .title-subtitle {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #9ca3af;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #bdbdbd;
   margin-left: 0.5rem;
 }
 
@@ -69,9 +69,8 @@ body {
 
 /* Navigation */
 .nav {
-  background: rgba(24, 24, 36, 0.98);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(75, 85, 99, 0.18);
+  background: #000;
+  border-bottom: 1px solid #222;
   padding: 0 2rem;
   position: sticky;
   top: 68px;
@@ -83,10 +82,10 @@ body {
 .nav-tab {
   background: none;
   border: none;
-  padding: 1rem 2.2rem;
-  font-size: 1rem;
+  padding: 1.1rem 2.5rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: #b0b3c6;
+  color: #f5f5f7;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   border-radius: 0.5rem 0.5rem 0 0;
@@ -96,14 +95,14 @@ body {
 }
 
 .nav-tab:hover {
-  color: #f9fafb;
-  background: rgba(59, 130, 246, 0.10);
+  color: #fff;
+  background: #181818;
 }
 
 .nav-tab.active {
-  color: #60a5fa;
-  border-bottom-color: #60a5fa;
-  background: rgba(59, 130, 246, 0.13);
+  color: #fff;
+  border-bottom-color: #fff;
+  background: #181818;
 }
 
 /* Main Content */
@@ -137,24 +136,25 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
+  background: #fff;
+  color: #111;
 }
 
 .btn-primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  background: #f5f5f7;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
 }
 
 .btn-secondary {
-  background: #059669;
-  color: white;
+  background: #222;
+  color: #fff;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #047857;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+  background: #181818;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
 }
 
 .btn.loading {
@@ -186,15 +186,16 @@ body {
 }
 
 .status-indicator {
-  background: rgba(31, 41, 55, 0.8);
+  background: #181818;
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  border: 1px solid rgba(75, 85, 99, 0.3);
+  border: 1px solid #222;
   backdrop-filter: blur(10px);
+  color: #fff;
 }
 
 .status-dot {
@@ -204,7 +205,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  background: #222;
+  color: #fff;
   font-weight: bold;
   font-size: 0.875rem;
 }
@@ -230,6 +232,9 @@ body {
   align-items: center;
   gap: 0.75rem;
   font-weight: 500;
+  background: #181818;
+  border: 1px solid #222;
+  color: #fff;
 }
 
 .message-banner.success {
@@ -257,9 +262,9 @@ body {
 }
 
 .error-banner {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background: #181818;
+  border: 1px solid #222;
+  color: #fff;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
@@ -546,10 +551,10 @@ body {
 
 /* Profile Card Modernization */
 .profile-card {
-  background: rgba(31, 41, 55, 0.95);
+  background: #111;
   border-radius: 1rem;
   padding: 2rem 1.5rem 1.5rem 1.5rem;
-  border: 1px solid rgba(75, 85, 99, 0.25);
+  border: 1px solid #222;
   box-shadow: 0 6px 24px rgba(0,0,0,0.18);
   display: flex;
   flex-direction: column;
@@ -558,8 +563,8 @@ body {
 }
 .profile-card:hover {
   transform: translateY(-4px) scale(1.025);
-  box-shadow: 0 12px 32px rgba(59,130,246,0.18);
-  border-color: #60a5fa;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+  border-color: #fff;
 }
 
 .profile-image-wrapper {
@@ -576,9 +581,9 @@ body {
   height: 110px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #3b82f6;
-  box-shadow: 0 2px 12px rgba(59,130,246,0.12);
-  background: #222b3a;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  background: #222;
 }
 
 .profile-header {
@@ -588,31 +593,31 @@ body {
   align-items: center;
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(75, 85, 99, 0.15);
+  border-bottom: 1px solid #222;
 }
 
 .profile-header h3 {
-  color: #f9fafb;
+  color: #fff;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .profile-timestamp {
-  color: #9ca3af;
+  color: #bdbdbd;
   font-size: 0.9rem;
 }
 
 .profile-summary {
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.18);
-  color: #e5e7eb;
+  background: #181818;
+  border: 1px solid #222;
+  color: #f5f5f7;
   border-radius: 0.75rem;
   padding: 1.1rem 1rem 1rem 1rem;
   margin-top: 0.5rem;
   width: 100%;
   font-size: 1rem;
   line-height: 1.6;
-  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   text-align: left;
 }
 
