@@ -1,8 +1,10 @@
-# Meta AI - Real-Time Face Recognition & People Search
+# Meta AI Face Recognition
+
+A full-stack real-time face recognition app using FastAPI (backend), React (frontend), and RTMP video streaming. Supports cloud deployment (Railway, Vercel) and local development. Detects faces from live video streams, performs reverse image search, and displays results in a modern UI.
+
+---
 
 ## Architecture
-
-This project uses a modern, cloud-friendly architecture for real-time face recognition from live video streams. Below is a detailed architecture diagram and explanation:
 
 ```mermaid
 flowchart TD
@@ -57,268 +59,127 @@ flowchart TD
 
 ---
 
-A comprehensive real-time face recognition application with RTMP stream processing, reverse image search, people database searches, and GPT-powered profile summarization.
+## Prerequisites
+- Node.js (18+)
+- Python (3.10+)
+- Docker (for nginx-rtmp)
+- OBS Studio (for streaming)
+- Railway, Vercel, and ngrok accounts
 
-## 🚀 Features
+---
 
-### Core Functionality
-- **Real-time RTMP Stream Processing** - Live face detection from OBS streams
-- **Advanced Face Detection** - High-accuracy face recognition using OpenCV
-- **Multi-Engine Reverse Image Search** - PimEyes, TinEye, Bing Visual, Google Lens
-- **Comprehensive People Search** - FastPeopleSearch, CheckThem, Instant Checkmate
-- **GPT-Powered Summarization** - Intelligent profile generation with OpenAI
-- **Modern React Dashboard** - Real-time status updates and results display
+## Environment Variables
 
-### Enhanced API Integrations
-- **TinEye API** - Official reverse image search API
-- **Bing Visual Search API** - Microsoft Cognitive Services integration
-- **PimEyes Automation** - Selenium-based web automation with authentication
-- **OpenAI GPT-4** - Advanced profile summarization and analysis
+### Backend (.env)
+- `RTMP_URL` - Public RTMP stream URL (from ngrok)
+- `BASE_URL` - Public backend URL (e.g. Railway URL)
+- `PIMEYES_EMAIL`, `PIMEYES_PASSWORD` - (Optional) For PimEyes automation
 
-### Advanced Web Scraping
-- **Proxy Rotation** - Automatic proxy management for rate limiting
-- **User-Agent Rotation** - Multiple browser signatures to avoid detection
-- **Rate Limiting** - Intelligent request throttling with exponential backoff
-- **Enhanced Parsing** - Sophisticated data extraction from search results
+### Frontend (.env)
+- `REACT_APP_BACKEND_URL` - Backend API URL (Railway or local)
 
-## 🛠️ Setup Instructions
+---
 
-### Prerequisites
-- Docker and Docker Compose
-- Python 3.8+
-- Node.js 16+
-- Chrome/Chromium browser (for PimEyes automation)
+## Local Development
 
-### 1. Clone and Setup
+### 1. Clone the repo
 ```bash
-git clone <repository-url>
-cd Meta-AI
+git clone https://github.com/sahejveersingh/meta-ai-face-recognition.git
+cd meta-ai-face-recognition
 ```
 
-### 2. Environment Configuration
-Copy the environment template and configure your API keys:
-
+### 2. Backend Setup
 ```bash
-cp env_template.txt .env
-```
-
-Edit `.env` with your API credentials:
-
-```env
-# OpenAI API Configuration
-OPENAI_API_KEY=your_openai_api_key_here
-
-# TinEye API Configuration
-TINEYE_API_KEY=your_tineye_api_key_here
-
-# Bing Visual Search API Configuration
-BING_VISUAL_API_KEY=your_bing_visual_api_key_here
-
-# PimEyes Credentials
-PIMEYES_USERNAME=your_pimeyes_username
-PIMEYES_PASSWORD=your_pimeyes_password
-
-# Application Configuration
-HOST=0.0.0.0
-PORT=8000
-DEBUG=True
-CHROME_BIN=/usr/bin/chromium
-
-# Optional: Proxy Configuration
-USE_PROXIES=False
-PROXY_LIST_URL=https://api.proxyscrape.com/v2/?request=get&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all
-```
-
-### 3. API Key Setup
-
-#### OpenAI API
-1. Visit [OpenAI Platform](https://platform.openai.com/)
-2. Create an account and get your API key
-3. Add to `.env`: `OPENAI_API_KEY=sk-your-key-here`
-
-#### TinEye API
-1. Visit [TinEye API](https://services.tineye.com/developers/)
-2. Sign up for API access
-3. Add to `.env`: `TINEYE_API_KEY=your-tineye-key`
-
-#### Bing Visual Search API
-1. Visit [Microsoft Azure](https://azure.microsoft.com/en-us/services/cognitive-services/bing-visual-search/)
-2. Create a Cognitive Services resource
-3. Get your API key
-4. Add to `.env`: `BING_VISUAL_API_KEY=your-bing-key`
-
-#### PimEyes Credentials
-1. Visit [PimEyes](https://pimeyes.com/)
-2. Create an account
-3. Add to `.env`: `PIMEYES_USERNAME=your-email` and `PIMEYES_PASSWORD=your-password`
-
-### 4. Docker Deployment
-```bash
-# Build and start all services
-docker-compose up --build
-
-# Or run in background
-docker-compose up -d --build
-```
-
-### 5. Manual Setup (Alternative)
-If you prefer not to use Docker:
-
-```bash
-# Backend setup
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
-python main.py
+cp ../env_local.txt .env
+```
 
-# Frontend setup (in another terminal)
-cd frontend
+### 3. Frontend Setup
+```bash
+cd ../frontend
 npm install
+cp ../env_local.txt .env
 npm start
 ```
 
-## 📡 RTMP Stream Setup
-
-### OBS Configuration
-1. Open OBS Studio
-2. Go to Settings → Stream
-3. Set Service to "Custom"
-4. Server: `rtmp://localhost/live`
-5. Stream Key: `test` (or any key you prefer)
-
-### Stream Processing
-The system automatically:
-- Detects faces in the RTMP stream
-- Crops and saves face images
-- Performs reverse image searches
-- Searches people databases
-- Generates comprehensive profiles
-
-## 🔍 Search Engines & APIs
-
-### Reverse Image Search
-- **PimEyes** - Advanced facial recognition search
-- **TinEye** - Official API integration
-- **Bing Visual** - Microsoft Cognitive Services
-- **Google Lens** - Manual search with instructions
-
-### People Search Databases
-- **FastPeopleSearch** - Enhanced web scraping
-- **CheckThem** - Criminal records and background checks
-- **Instant Checkmate** - Comprehensive background reports
-
-### Enhanced Features
-- **Proxy Rotation** - Automatic proxy management
-- **Rate Limiting** - Intelligent request throttling
-- **User-Agent Rotation** - Multiple browser signatures
-- **Error Handling** - Graceful fallbacks and retry logic
-
-## 🎯 Usage
-
-### Web Dashboard
-1. Open `http://localhost:3000` in your browser
-2. Upload images or start RTMP processing
-3. View real-time results and profiles
-4. Access manual search links for verification
-
-### API Endpoints
-- `POST /upload-image/` - Upload and process single image
-- `POST /create-comprehensive-profile/` - Full pipeline processing
-- `POST /start-rtmp-processing/` - Start RTMP stream processing
-- `GET /rtmp-profiles/` - Get processed profiles
-- `GET /status/` - System status
-
-### Manual Search Links
-The system provides direct links to:
-- Reverse image search engines
-- People search databases
-- Background check services
-
-## 🔧 Configuration Options
-
-### Docker Services
-- **nginx-rtmp** - RTMP server for stream ingestion
-- **backend** - FastAPI application with all search logic
-- **frontend** - React dashboard for user interface
-
-### Environment Variables
-- `DEBUG` - Enable debug logging
-- `USE_PROXIES` - Enable proxy rotation
-- `CHROME_BIN` - Chrome/Chromium binary path
-- `PROXY_LIST_URL` - Custom proxy list source
-
-## 🚨 Important Notes
-
-### Docker Limitations
-- PimEyes automation is limited in Docker containers
-- Use manual image upload for best results
-- Consider running outside Docker for full automation
-
-### API Rate Limits
-- Respect API rate limits and terms of service
-- Use proxy rotation for high-volume searches
-- Implement appropriate delays between requests
-
-### Legal Compliance
-- Ensure compliance with local laws and regulations
-- Respect privacy and data protection requirements
-- Use search results responsibly and ethically
-
-## 🐛 Troubleshooting
-
-### Common Issues
-1. **ChromeDriver crashes** - Use manual upload or run outside Docker
-2. **API quota exceeded** - Check API key limits and billing
-3. **Rate limiting** - Enable proxy rotation or increase delays
-4. **Authentication errors** - Verify API keys and credentials
-
-### Debug Mode
-Enable debug logging:
+### 4. RTMP Streaming (nginx-rtmp + ngrok)
+- Start nginx-rtmp locally (see `nginx-rtmp.conf`)
+- Start ngrok to expose RTMP:
 ```bash
-export DEBUG=True
-docker-compose up
+ngrok tcp 1935
+```
+- Use the ngrok RTMP URL in OBS and as `RTMP_URL` in backend `.env`
+
+---
+
+## Cloud Deployment
+
+### Backend (Railway)
+- Deploy `/backend` folder
+- Set environment variables in Railway dashboard (use Raw Editor for case sensitivity)
+- Set `RTMP_URL` to your ngrok public RTMP address
+- Set `BASE_URL` to your Railway backend URL
+
+### Frontend (Vercel)
+- Deploy `/frontend` folder
+- Set `REACT_APP_BACKEND_URL` to your Railway backend URL in Vercel dashboard
+
+---
+
+## Useful Commands
+
+### Backend
+- Start backend locally: `uvicorn main:app --reload`
+- Run with Docker: `docker-compose up --build`
+
+### Frontend
+- Start frontend locally: `npm start`
+- Build for production: `npm run build`
+
+### RTMP/Streaming
+- Start nginx-rtmp: `docker-compose up nginx-rtmp` (if using Docker)
+- Start ngrok: `ngrok tcp 1935`
+
+---
+
+## Troubleshooting
+- **Images not showing in UI:** Ensure `BASE_URL` is set correctly on Railway and CORS is allowed for static files.
+- **RTMP stream not detected:** Check OBS settings and ngrok tunnel.
+- **Frontend not updating:** Check `REACT_APP_BACKEND_URL` in Vercel and local `.env`.
+
+---
+
+## Example .env Files
+
+### env_local.txt (for local dev)
+```
+# Backend
+RTMP_URL=rtmp://localhost:1935/live/test
+BASE_URL=http://localhost:8000
+PIMEYES_EMAIL=your@email.com
+PIMEYES_PASSWORD=yourpassword
+
+# Frontend
+REACT_APP_BACKEND_URL=http://localhost:8000
 ```
 
-### Manual Testing
-Test individual components:
-```bash
-# Test PimEyes
-curl http://localhost:8000/test-pimeyes/
+### env_dev.txt (for cloud/dev)
+```
+# Backend
+RTMP_URL=rtmp://<ngrok-tcp-host>:<ngrok-tcp-port>/live/test
+BASE_URL=https://meta-ai-face-recognition-production.up.railway.app
+PIMEYES_EMAIL=your@email.com
+PIMEYES_PASSWORD=yourpassword
 
-# Test GPT
-curl http://localhost:8000/test-gpt/
-
-# Test face detection
-curl -X POST http://localhost:8000/upload-image/ -F "file=@test.jpg"
+# Frontend
+REACT_APP_BACKEND_URL=https://meta-ai-face-recognition-production.up.railway.app
 ```
 
-## 📊 Performance Optimization
+---
 
-### Scaling Options
-- **Horizontal scaling** - Multiple backend instances
-- **Load balancing** - Nginx reverse proxy
-- **Caching** - Redis for search results
-- **Database** - PostgreSQL for profile storage
-
-### Monitoring
-- Real-time status dashboard
-- Log aggregation and analysis
-- Performance metrics tracking
-- Error rate monitoring
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Add tests and documentation
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## ⚠️ Disclaimer
-
-This tool is for educational and research purposes only. Users are responsible for complying with all applicable laws and regulations regarding privacy, data protection, and search engine terms of service. 
+## Credits
+- Built by Sahejveer Singh Kumar
+- Powered by FastAPI, React, Railway, Vercel, ngrok, and open-source tools 
