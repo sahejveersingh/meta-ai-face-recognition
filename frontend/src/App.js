@@ -121,11 +121,11 @@ function App() {
   const StatusIndicator = ({ status, label }) => {
     const getStatusColor = (status) => {
       switch (status) {
-        case 'ok': return '#10b981';
-        case 'error': return '#ef4444';
-        case 'processing': return '#f59e0b';
-        case 'warning': return '#f59e0b';
-        default: return '#6b7280';
+        case 'ok': return 'bg-green-500';
+        case 'error': return 'bg-red-500';
+        case 'processing': return 'bg-yellow-400';
+        case 'warning': return 'bg-yellow-400';
+        default: return 'bg-gray-400';
       }
     };
 
@@ -140,15 +140,10 @@ function App() {
     };
 
     return (
-      <div className="status-indicator">
-        <div 
-          className="status-dot"
-          style={{ backgroundColor: getStatusColor(status) }}
-        >
-          {getStatusIcon(status)}
-        </div>
-        <span className="status-label">{label}</span>
-        <span className="status-value">{status}</span>
+      <div className="flex flex-col items-center justify-center bg-neutral-900 border border-neutral-800 rounded-2xl shadow-lg px-4 py-6 min-w-[150px] min-h-[120px] w-full max-w-xs mx-auto">
+        <div className={`flex items-center justify-center w-10 h-10 rounded-full text-2xl font-bold mb-2 ${getStatusColor(status)}`}>{getStatusIcon(status)}</div>
+        <div className="text-lg font-semibold text-white text-center break-words leading-tight mb-1">{label}</div>
+        <div className="text-base text-neutral-400 text-center break-words">{status.charAt(0).toUpperCase() + status.slice(1)}</div>
       </div>
     );
   };
@@ -177,26 +172,21 @@ function App() {
         </div>
       </header>
 
-      <nav className="sticky top-[56px] z-20 w-full bg-black border-b border-neutral-800 overflow-x-auto">
-        <div className="max-w-5xl mx-auto flex items-center px-2 sm:px-4 gap-1">
-          <button 
-            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'dashboard' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('dashboard')}
-          >
-            📊 Dashboard
-          </button>
-          <button 
-            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'upload' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('upload')}
-          >
-            📤 Upload Image
-          </button>
-          <button 
-            className={`whitespace-nowrap px-4 py-2 text-base font-medium border-b-2 transition-all ${activeTab === 'profiles' ? 'border-white text-white' : 'border-transparent text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('profiles')}
-          >
-            👥 Detected Profiles
-          </button>
+      <nav className="sticky top-[56px] z-20 w-full bg-black border-b border-neutral-800">
+        <div className="max-w-5xl mx-auto flex justify-center items-center gap-2 px-2 sm:px-4 overflow-x-auto">
+          {[
+            { tab: 'dashboard', icon: '📊', label: 'Dashboard' },
+            { tab: 'upload', icon: '📤', label: 'Upload Image' },
+            { tab: 'profiles', icon: '👥', label: 'Detected Profiles' },
+          ].map(({ tab, icon, label }) => (
+            <button
+              key={tab}
+              className={`whitespace-nowrap px-4 py-2 text-base font-medium rounded-lg transition-all duration-150 ${activeTab === tab ? 'bg-white text-black shadow font-semibold' : 'text-neutral-300 hover:text-white hover:bg-neutral-800'} mx-1`}
+              onClick={() => setActiveTab(tab)}
+            >
+              <span className="mr-2">{icon}</span>{label}
+            </button>
+          ))}
         </div>
       </nav>
 
