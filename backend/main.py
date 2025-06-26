@@ -1660,7 +1660,8 @@ def create_comprehensive_profile_sync(face_path):
                 "message": "No confident name match found from reverse image searches",
                 "reverse_search_results": reverse_search_results,
                 "people_search_results": [],
-                "summary": "Unable to identify the person in the image with sufficient confidence. Please try manual search or upload a clearer image."
+                "summary": "Unable to identify the person in the image with sufficient confidence. Please try manual search or upload a clearer image.",
+                "image": face_path  # Always include the image URL
             }
 
         logger.info(f"✅ Best name match: {best_name_str}")
