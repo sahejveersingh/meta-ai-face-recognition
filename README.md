@@ -180,6 +180,36 @@ REACT_APP_BACKEND_URL=https://meta-ai-face-recognition-production.up.railway.app
 
 ---
 
+## Docker Commands
+
+### Start nginx-rtmp server (local)
+```bash
+docker-compose up nginx-rtmp
+```
+
+### Start backend (local)
+```bash
+docker-compose up backend
+```
+
+### Start all services (detached)
+```bash
+docker-compose up -d --build
+```
+
+### Stop all services
+```bash
+docker-compose down
+```
+
+---
+
+## Disclaimer
+
+This project is provided **for research and educational purposes only**. Users are responsible for complying with all applicable laws, privacy regulations, and the terms and conditions of any third-party services or APIs used. The authors assume no liability for misuse or non-compliance.
+
+---
+
 ## Credits
 - Built by Sahejveer Singh Kumar
 - Powered by FastAPI, React, Railway, Vercel, ngrok, and open-source tools 
